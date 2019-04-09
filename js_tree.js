@@ -37,13 +37,16 @@
       node and false if it doesn't
 */
 
+//This line of code loads the function 'makeTree' with the browser.
 window.addEventListener("load", makeTree);
 
+//This section of code sets 4 global variables to the initial value of 0.
 var nodeCount = 0;
-var elementCount = 0;
+var elemCount = 0;
 var textCount = 0;
 var wsCount = 0;
 
+//This function creates elements that create document fragments & appends them to each other to become a part of the node tree.
 function makeTree() {
       var aside = document.createElement("aside");
       aside.setAttribute("id", "treeBox");
@@ -51,6 +54,28 @@ function makeTree() {
       heading.innerHTML = "Node Tree";
       aside.appendChild(heading);
       document.getElementById("main").appendChild(aside);
+      var nodeList = document.createElement("ol");
+      aside.appendChild(nodeList);
+      var sourceArticle = document.querySelector("#main article");
+      makeBranches(sourceArticle, nodeList);
+}
+
+function makeBranches(treeNode, nestedList) {
+      nodeCount++;
+      var liElem = document.createElement("li");
+      liElem.textContent = "+--";
+      var spanElem = document.createElement("span");
+      liElem.appendChild(spanElem);
+      nestedList.appendChild(liElem);
+      if (treeNode.nodeType === 1) {
+            elemCount++;
+            spanElem.setAttribute("class", "elementNode");
+            spanElem.textContent = "<" + treeNode.nodeName + ">";
+      }
+      // else if (treeNode.nodeType === 3) {
+      //       textCount++;
+      //       var textString = 'textNode'
+      // }
 }
 
 function isWhiteSpaceNode(tString) {
